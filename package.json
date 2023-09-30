@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/QuanTranDoanAnh/pptr-mocha.git"
   },
-  "keywords": [],
+  "keywords": [
+    "mocha",
+    "puppeteer",
+    "framework"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
