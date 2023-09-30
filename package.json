@@ -4,8 +4,8 @@
   "description": "Advanced Builder Pattern Framework with Puppeteer and Mocha",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --timeout=30000 ./build/tests/**.js",
-    "clean": "rm --rf build",
+    "test": "./node_modules/.bin/mocha --timeout=30000 ./build/tests/**.js",
+    "clean": "rm -rf build",
     "build": "babel --preset es2015 -d ./build ./src"
   },
   "repository": {
