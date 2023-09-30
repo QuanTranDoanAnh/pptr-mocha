@@ -1,18 +1,16 @@
 import { step } from 'mocha-steps'
-import puppeteer  from 'puppeteer'
+import Page from '../builder'
 
 describe('Mocha steps demo', () => {
-  let browser
   let page
+  let mobile
 
   before(async () => {
-    browser = await puppeteer.launch({ headless: true })
-    page = await browser.newPage()
-    await page.setDefaultTimeout(7000)
+    page = await Page.build("Desktop")
   })
 
   after(async () => {
-    await browser.close()
+    await page.close()
   })
 
   step('should load google homepage', async () => {
@@ -27,7 +25,7 @@ describe('Mocha steps demo', () => {
     console.log("From step 3")
   })
 
-  step("step 3", async () =>{
+  step("step 4", async () =>{
     console.log("From step 4")
   })
 })
