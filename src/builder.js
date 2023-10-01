@@ -3,7 +3,7 @@ import puppeteer from "puppeteer"
 export default class Builder {
   static async build(viewport) {
     const launchOptions = {
-      headless: `new`,
+      headless: false,
       slowMo: 0,
       args: [
         '--no-sandbox',
@@ -76,7 +76,7 @@ export default class Builder {
     await this.page.type(selector, text)
   }
 
-  async getText(selector, text) {
+  async getText(selector) {
     await this.page.waitForSelector(selector)
     const text = await this.page.$eval(selector, e => e.innerHTML)
     return text
@@ -105,5 +105,15 @@ export default class Builder {
         visible = false
       })
     return visible;
+  }
+
+  async isXPathVisible(selector) {
+    let visible = true
+    await this.page
+      .waitForXPath(selector, { visible: true, timeout: 3000 })
+      .catch(() => {
+        visible = false
+      })
+    return visible
   }
 }
