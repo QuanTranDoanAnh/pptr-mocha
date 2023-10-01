@@ -37,7 +37,7 @@ export default class Builder {
     return new Proxy(extendedPage, {
       get: (_target, property, receiver) => {
         if (_target[property]) {
-          return target[property]
+          return _target[property]
         }
 
         let value = browser[property]
@@ -60,5 +60,50 @@ export default class Builder {
 
   constructor(page) {
     this.page = page
+  }
+
+  async wait(timeout) {
+    return await new Promise((resolve, reject) => setTimeout(resolve, timeout))
+  }
+
+  async waitAndClick(selector) {
+    await this.page.waitForSelector(selector)
+    await this.page.click(selector)
+  }
+
+  async waitAndType(selector, text) {
+    await this.page.waitForSelector(selector)
+    await this.page.type(selector, text)
+  }
+
+  async getText(selector, text) {
+    await this.page.waitForSelector(selector)
+    const text = await this.page.$eval(selector, e => e.innerHTML)
+    return text
+  }
+
+  async getCount(selector) {
+    await this.page.waitForSelector(selector)
+    const count = await this.page.$$eval(selector, items => items.length)
+    return count
+  }
+
+  async waitForXPathAndClick(xpath) {
+    await this.page.waitForXPath(xpath)
+    const elements = await this.page.$x(xpath)
+    if (elements.length > 1) {
+      console.warn('waitForXPathAndClick returned more than one result')
+    }
+    await elements[0].click()
+  }
+
+  async isElementVisible(selector) {
+    let visible = true
+    await this.page
+      .waitForSelector(selector, { visible: true, timeout: 3000 })
+      .catch(() => {
+        visible = false
+      })
+    return visible;
   }
 }
