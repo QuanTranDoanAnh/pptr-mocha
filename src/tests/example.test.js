@@ -35,4 +35,9 @@ describe('Mocha steps demo', () => {
     const navbarVisible = await page.isElementVisible('.navbar-tabs')
     expect(navbarVisible).to.be.true
   })
+
+  step('should have 6 navbar links', async () => {
+    const navbarLinksCount = await page.getCount('.nav-tabs li')
+    expect(navbarLinksCount).to.equal(6)
+  })
 })
