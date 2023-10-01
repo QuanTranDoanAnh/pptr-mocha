@@ -1,21 +1,14 @@
 import puppeteer from "puppeteer"
+import config from './config/launchConfig'
 
 export default class Builder {
   static async build(viewport) {
-    const launchOptions = {
-      headless: false,
-      slowMo: 0,
-      args: [
-        '--no-sandbox',
-        '--disable-setui-sandbox',
-        '--disable-web-security'
-      ]
-    }
-
-    const browser = await puppeteer.launch(launchOptions)
+    console.log(config)
+    const browser = await puppeteer.launch(config.launchOptions)
     const page = await browser.newPage()
     const extendedPage = new Builder(page)
-    page.setDefaultTimeout(10000)
+    page.setDefaultTimeout(config.timeout)
+    page.setDefaultNavigationTimeout(config.navigationTimeout)
 
     switch(viewport) {
       case 'Mobile':
@@ -27,7 +20,7 @@ export default class Builder {
         await page.emulate(tabletViewport)
         break
       case 'Desktop':
-        await page.setViewport({ width: 1920, height: 1080})
+        await page.setViewport({ width: 1512, height: 982})
         break
       default:
         throw new Error('Supported devices are only Mobile | Tablet | Desktop')

@@ -2,12 +2,16 @@ import { step } from 'mocha-steps'
 import Page from '../builder'
 import { expect } from 'chai'
 
+import LoginPage from '../pages/LoginPage'
+import config from '../config/credentials' 
+
 describe('Mocha steps demo', () => {
   let page
-  let mobile
-
+  let loginPage
+  
   before(async () => {
     page = await Page.build("Desktop")
+    loginPage = new LoginPage(page)
   })
 
   after(async () => {
@@ -29,9 +33,9 @@ describe('Mocha steps demo', () => {
   })
 
   step('should login to application', async () => {
-    await page.waitAndType('#user_login', 'username')
-    await page.waitAndType('#user_password', 'password')
-    await page.waitAndClick('.btn-primary')
+    console.log('Username: ' + config.username)
+    console.log('Password: ' + config.password)
+    await loginPage.login(config.username, config.password)
     const navbarVisible = await page.isElementVisible('.navbar-tabs')
     expect(navbarVisible).to.be.true
   })

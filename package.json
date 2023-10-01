@@ -27,10 +27,13 @@
     "chai": "^4.3.10",
     "mocha": "^10.2.0",
     "mocha-steps": "^1.3.0",
-    "puppeteer": "^21.3.6"
+    "mochawesome": "^7.1.3",
+    "puppeteer": "^21.3.6",
+    "spell-checker-js": "^1.2.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-preset-es2015": "^6.24.1",
+    "prettier": "^3.0.3"
   }
 }
